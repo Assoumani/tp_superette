@@ -1,0 +1,63 @@
+<DOCTYPE html>
+    <html>
+    <head>
+        <%- include('../partials/head', {title: 'Superette'}) %>
+    </head>
+    <body>
+    <div class="container">
+
+        <div class="px-4 py-5 my-5 text-center">
+            <h1 class="display-5 fw-bold">PRODUCTS MANAGER</h1>
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4">
+                    Bienvenue sur l'application de gestion de vos produits (stock, prix et disponibilité)
+                </p>
+            </div>
+        </div>
+
+        <div class="row-">
+
+            <div class="col-10 mx-auto">
+
+                <div class="d-flex justify-content-between mb-3">
+                    <h2>NOS PRODUITS</h2>
+                    <a href="/products/new" class="btn btn-success btn-lg">NOUVEAU PRODUIT</a>
+                </div>
+
+                <% if(products.length > 0) {
+                        for(const product of products) { %>
+
+                    <div class="card mb-3">
+                        <div class="row g-0 p-2">
+                            <div class="col-md-4 mr-2">
+                                <img src="<%= product.imageUrl %>" style="width: 250px">
+                            </div>
+                            <div class="col-md-6 mx-auto">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= product.name %></h5>
+                                    <p class="card-text"><%= product.description %></p>
+                                    <div>
+                                        <a href="/products/<%= product._id %>"
+                                           class="btn btn-primary my-1">VOIR</a>
+                                    </div>
+                                    <div>
+                                        <a href="/products/<%= product._id %>/edit"
+                                           class="btn btn-warning my-1">MODIFIER</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }
+                } else { %>
+                    <h3 class="text-center my-5">Il n'y a pas encore de produits !</h3>
+                <% } %>
+
+            </div>
+
+        </div>
+
+    </div>
+    </body>
+    </html>
+</DOCTYPE>

@@ -1,0 +1,71 @@
+<DOCTYPE html>
+    <html>
+    <head>
+        <%- include('../partials/head', {title: 'Superette'}) %>
+    </head>
+    <body>
+    <div class="container">
+
+        <div class="px-4 py-5 my-5 text-center">
+            <h1 class="display-5 fw-bold">PRODUCTS MANAGER</h1>
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4">
+                    Bienvenue sur l'application de gestion de vos produits (stock, prix et disponibilité)
+                </p>
+            </div>
+        </div>
+
+        <div class="row-">
+
+            <div class="col-10 mx-auto">
+
+                <div class="d-flex justify-content-between mb-3">
+                    <h2>PRODUIT</h2>
+                    <a href="/products" class="btn btn-success btn-lg">TOUS LES PRODUIT</a>
+                </div>
+
+                <% if(product) { %>
+                    <div class="card mb-3">
+                        <div class="card card-header text-center">
+                            <h5 class="card-title"><%= product.name %></h5>
+                        </div>
+                        <div class="row g-0 p-2">
+                            <div class="col-md-4 mr-2">
+                                <img src="<%= product.imageUrl %>" style="width: 250px">
+                            </div>
+                            <div class="col-md-6 mx-auto">
+                                <div class="card-body">
+                                    <span class="card-text"><%= product.description %></span><br>
+                                    <span class="card-text text-muted">Vendu au prix de : <%= product.price %> €</span><br>
+                                    <span class="card-text text-muted">Quantité dispo : <%= product.quantity %></span><br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-footer">
+                            <div class="row justify-content-end">
+                                <div class="col-md-auto">
+                                    <a href="/products/<%= product._id %>/edit"
+                                       class="btn btn-outline-warning my-1">MODIFIER</a>
+                                </div>
+                                <div class="col-md-auto">
+                                    <a href="/products/<%= product._id %>/delete"
+                                       class="btn btn-outline-danger my-1">SUPPRIMER</a>
+                                </div>
+                                <div class="col-md-auto">
+                                    <a href="/products/"
+                                       class="btn btn-outline-dark my-1">RETOUR</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <h3 class="text-center my-5">Produit non trouvé !</h3>
+                <% } %>
+            </div>
+
+        </div>
+
+    </div>
+    </body>
+    </html>
+</DOCTYPE>
