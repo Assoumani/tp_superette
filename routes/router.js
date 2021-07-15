@@ -1,6 +1,7 @@
 require('dotenv').config();
 module.exports = (app) => {
 
+    require('./auth')(app);
     require('./products')(app);
 
     // define default route

@@ -3,6 +3,9 @@ CONNECTION_STRING=`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWOR
 const express = require('express'),
     mongoose = require('mongoose'),
     cors = require('cors'),
+    passport = require('passport'),
+    passportConfig = require('./config/passport'),
+    User = require('./models/user'),
     path = require('path');
 
 //create app
@@ -16,6 +19,10 @@ app.use(express.json())
 
 // prevent error policy
 app.use(cors());
+
+// use local jwt strategy for passport
+passport.use(passportConfig.localStrategy)
+passport.use(passportConfig.jwtStrategy)
 
 //define the new Engine
 app.set('views', path.join(__dirname, 'views'))
@@ -32,6 +39,23 @@ mongoose.connect(
 
 // manage all routes
 require('./routes/router')(app)
+
+User
+    .countDocuments()
+    .exec((err, usersCount) => {
+        if (err){
+            return console.error(err)
+        }
+
+        if (usersCount === 0){
+            new User({
+                username: 'Assou',
+                email: 'assoumani.mutabaruka@gmail.com',
+                firstname: 'Assoumani',
+                lastname: 'Mutabaruka'
+            }).save()
+        }
+    })
 
 app.listen(process.env.SERVER_PORT, ()=>{
     console.info(`Server is running on port ${process.env.SERVER_PORT}`)

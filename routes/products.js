@@ -1,20 +1,21 @@
 const express = require('express'),
-    productController = require('../controllers/product')
+    JWTGuard = require('../config/passport').checkIsAuth,
+    productController = require('../controllers/product');
 
 module.exports = (app) => {
     const commonProductsRoutes = express.Router();
     const webAppProductsRoutes = express.Router();
 
-    commonProductsRoutes.get('/products', productController.getAll);
-    commonProductsRoutes.get('/products/:id', productController.getById);
+    commonProductsRoutes.get('/products', JWTGuard, productController.getAll);
+    commonProductsRoutes.get('/products/:id', JWTGuard, productController.getById);
 
-    webAppProductsRoutes.get('/products/new', productController.new);
-    commonProductsRoutes.post('/products/create', productController.new);
+    webAppProductsRoutes.get('/products/new', JWTGuard, productController.new);
+    commonProductsRoutes.post('/products/create', JWTGuard, productController.new);
 
-    commonProductsRoutes.get('/products/:id/edit', productController.edit);
-    commonProductsRoutes.post('/products/:id/update', productController.edit);
+    commonProductsRoutes.get('/products/:id/edit', JWTGuard, productController.edit);
+    commonProductsRoutes.post('/products/:id/update', JWTGuard, productController.edit);
 
-    commonProductsRoutes.get('/products/:id/delete', productController.deleteById);
+    commonProductsRoutes.get('/products/:id/delete', JWTGuard, productController.deleteById);
 
     app.use('/', commonProductsRoutes)
     app.use('/', webAppProductsRoutes)
